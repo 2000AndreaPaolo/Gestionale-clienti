@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service'
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+import { Auth } from '../model_body'
 
 @Component({
   selector: 'app-login',
@@ -7,9 +12,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  auth:Auth;
 
-  ngOnInit() {
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    private toastr: ToastrService
+  ) { }
+
+  ngOnInit(){
+    this.auth = new Auth();
   }
 
+  login(){
+    state: RouterStateSnapshot;
+    this.authService.login(this.auth).subscribe((data: number ) => {
+      if(data === 1)
+        this.router.navigate(['/dashboard']);
+      else if(data === 2)
+        this.toastr.error('Credenziali non corrette', 'Errore');
+		});
+  }
 }
