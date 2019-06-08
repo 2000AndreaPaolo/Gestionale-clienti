@@ -1,1 +1,40 @@
 <app-main-nav></app-main-nav>
+<div class="container">
+    <div *ngIf="id_specializzazione == 1; then powerlifting else generico"></div>
+    <ng-template #powerlifting>
+        <h3 class="title">Allenamento giornaliero</h3>
+        <div class="container mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <ul class="timeline">
+                        <li>
+                            <h4>{{data}}</h4>
+                            <p *ngFor="let programmazione of programmazioni">{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} al {{programmazione.carico}} {{programmazione.note}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #generico>
+        <h3 class="title">Allenamento settimanale</h3>
+        <div class="container mt-5 mb-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <ul class="timeline" *ngFor="let giorni of vet_giorni">
+                        <div *ngIf="max_giorni >= giorni; then giorn else vuoto"></div>
+                        <ng-template #giorn>
+                            <li>
+                                <h4>Giorno {{giorni}}</h4>
+                                <p *ngFor="let progressione of progressioniFiltrate(giorni)">
+                                    {{progressione.nome_esercizio}}: {{progressione.serie}} x {{progressione.ripetizioni}} {{progressione.note}}
+                                </p>
+                            </li>
+                        </ng-template>
+                        <ng-template #vuoto></ng-template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
