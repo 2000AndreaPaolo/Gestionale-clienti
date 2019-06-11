@@ -32,54 +32,40 @@ export class DashboardComponent implements OnInit {
     if(this.authUser.id_specializzazione == 1){
       //Powerlifting
       this.programma = new Programma();
-      this.dashboardService.getProgramma().subscribe((data:Programmi[]) => {
+      this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data:Programmi[]) => {
         for(let dato of data){
-          if(dato.id_atleta == this.authUser.id_atleta){
-            if(this.programma){
-              this.programma = dato;
-            }else if(this.programma.data_fine < dato.data_inizio){
-              this.programma = dato;
-            }
+          if(this.programma){
+            this.programma = dato;
+          }else if(this.programma.data_fine < dato.data_inizio){
+            this.programma = dato;
           }
         }
         //Programmazioni
-        this.dashboardService.getProgrammazioneGiorno().subscribe((data:Programmazioni[]) => {
-          let appoggio: any[] = [];
-          for(let p of data){
-            if(p.id_programma == this.programma.id_programma){
-              this.data = p.data;
-              appoggio.push(p);
-            }
-          }
-          this.programmazioni = appoggio;
+        this.dashboardService.getProgrammazioneGiorno(this.programma.id_programma).subscribe((data:Programmazioni[]) => {
+          this.programmazioni = data;
+          this.data = data[0].data;
         });
       });
     }else{
       this.scheda = new Scheda();
-      this.dashboardService.getScheda().subscribe((data: Schede[]) => {
+      this.dashboardService.getScheda(this.authUser.id_atleta).subscribe((data: Schede[]) => {
         for(let dato of data){
-          if(dato.id_atleta == this.authUser.id_atleta){
-            if(this.scheda){
-              this.scheda = dato;
-            }else if(this.scheda.data_fine < dato.data_inizio){
-              this.scheda = dato;
-            }
+          if(this.scheda){
+            this.scheda = dato;
+          }else if(this.scheda.data_fine < dato.data_inizio){
+            this.scheda = dato;
           }
         }
         //Progressioni
-        this.dashboardService.getProgressione().subscribe((data:Progressioni[]) => {
-          let appoggio: any[] = [];
+        this.dashboardService.getProgressione(this.scheda.id_scheda).subscribe((data:Progressioni[]) => {
           for(let p of data){
-            if(p.id_scheda == this.scheda.id_scheda){
-              appoggio.push(p);
-              if(this.max_giorni){
-                this.max_giorni = p.giorno;
-              }else if(this.max_giorni < p.giorno){
-                this.max_giorni = p.giorno;
-              }
+            if(this.max_giorni){
+              this.max_giorni = p.giorno;
+            }else if(this.max_giorni < p.giorno){
+              this.max_giorni = p.giorno;
             }
           }
-          this.progressioni = appoggio;
+          this.progressioni = data;
         });
       });
     }

@@ -19,7 +19,7 @@ export class ProfiloComponent implements OnInit {
   ngOnInit(){
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
     if(this.authUser.id_specializzazione == 1){
-      this.dashboardService.getProgramma().subscribe((data: Programmi[]) => {
+      this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data: Programmi[]) => {
         let programma=null;
         for(let dato of data){
           if(programma == null){
@@ -31,7 +31,7 @@ export class ProfiloComponent implements OnInit {
         this.countdown = programma.data_fine;
       });
     }else{
-      this.dashboardService.getScheda().subscribe((data: Schede[]) => {
+      this.dashboardService.getScheda(this.authUser.id_atleta).subscribe((data: Schede[]) => {
         let scheda=null;
         for(let dato of data){
           if(scheda == null){

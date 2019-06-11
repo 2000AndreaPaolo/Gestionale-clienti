@@ -14,9 +14,9 @@ export class DashboardService {
 
   constructor(private http: HttpClient){}
 
-  getProgramma(){
+  getProgramma(id_atleta: number){
     let headers = new HttpHeaders({});
-    return this.http.get(environment.apiUrl + '/admin/programma', { headers: headers });
+    return this.http.post(environment.apiUrl + '/atleta/programma', JSON.stringify(id_atleta), { headers: headers });
   }
 
   getProgrammazione(){
@@ -24,18 +24,18 @@ export class DashboardService {
     return this.http.get(environment.apiUrl + '/admin/programmazione', { headers: headers });
   }
 
-  getProgrammazioneGiorno(){
+  getProgrammazioneGiorno(id_programma: number){
     let headers = new HttpHeaders({});
-    return this.http.get(environment.apiUrl + '/admin/programmazione/giorno', { headers: headers });
+    return this.http.post(environment.apiUrl + '/atleta/programmazione/giorno', JSON.stringify(id_programma), { headers: headers });
   }
 
-  getScheda(){
+  getScheda(id_atleta: number){
     let headers = new HttpHeaders({});
-    return this.http.get(environment.apiUrl + '/admin/scheda', { headers: headers });
+    return this.http.post(environment.apiUrl + '/atleta/scheda', JSON.stringify(id_atleta), { headers: headers });
   }
 
-  getProgressione(){
+  getProgressione(id_scheda: number){
     let headers = new HttpHeaders({});
-    return this.http.get(environment.apiUrl + '/admin/progressione', { headers: headers });
+    return this.http.post(environment.apiUrl + '/atleta/progressione', JSON.stringify(id_scheda), { headers: headers });
   }
 }

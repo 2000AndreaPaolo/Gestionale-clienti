@@ -29,15 +29,9 @@ export class NoteComponent implements OnInit {
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.nota = new Nota();
     this.noteService.getNote().subscribe((data: Note[]) => {
-      let appoggio: any[] =[];
-      for(let dato of data){
-        if(dato.id_atleta == this.authUser.id_atleta){
-          appoggio.push(dato);
-        }
-      }
-      this.note = appoggio;
+      this.note = data;
     });
-    this.noteService.loadNote();
+    this.noteService.loadNote(this.authUser.id_atleta);
   }
 
   openPopUp(id_note: number, conten: any) {
@@ -60,11 +54,11 @@ export class NoteComponent implements OnInit {
     this.nota.note = this.note_;
 		this.noteService.addNote(this.nota).subscribe((data) => {
 			if(data['code'] == 200){
-          this.noteService.loadNote();
+          this.noteService.loadNote(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.success('Nota aggiunta con successo', 'Successo');
 			  }else{
-          this.noteService.loadNote();
+          this.noteService.loadNote(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.error('Nota non aggiunta', 'Errore');
 			  }
@@ -77,11 +71,11 @@ export class NoteComponent implements OnInit {
     this.nota.note = this.note_;
 		this.noteService.modifyNote(this.nota).subscribe((data) => {
 			if(data['code'] == 200){
-          this.noteService.loadNote();
+          this.noteService.loadNote(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.success('Nota modificata con successo', 'Successo');
 			  }else{
-          this.noteService.loadNote();
+          this.noteService.loadNote(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.error('Nota non modificata', 'Errore');
 			  }
@@ -91,11 +85,11 @@ export class NoteComponent implements OnInit {
   deleteNote(id_note:number){
     this.noteService.deletNote(id_note).subscribe((data) => {
 			if(data['code'] == 200){
-				this.noteService.loadNote();
+				this.noteService.loadNote(this.authUser.id_atleta);
 				this.modalService.dismissAll('Reason');
 				this.toastr.success('Nota eliminata con successo', 'Successo');
 			  }else{
-          this.noteService.loadNote();
+          this.noteService.loadNote(this.authUser.id_atleta);
 				this.modalService.dismissAll('Reason');
 				this.toastr.error('Nota non eliminata', 'Errore');
 			  }

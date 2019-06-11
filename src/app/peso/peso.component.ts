@@ -31,16 +31,9 @@ export class PesoComponent implements OnInit {
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.peso = new Peso();
     this.pesoService.getPesi().subscribe((data: Pesi[]) => {
-      //this.pesi = data;
-      let appoggio: any[] =[];
-      for(let dato of data){
-        if(dato.id_atleta == this.authUser.id_atleta){
-          appoggio.push(dato);
-        }
-      }
-      this.pesi = appoggio;
+      this.pesi = data;
     });
-    this.pesoService.loadPesi();
+    this.pesoService.loadPesi(this.authUser.id_atleta);
   }
 
   openPopUp(id_peso: number, conten: any) {
@@ -67,11 +60,11 @@ export class PesoComponent implements OnInit {
     this.peso.peso = this.peso_;
 		this.pesoService.addPeso(this.peso).subscribe((data) => {
 			if(data['code'] == 200){
-          this.pesoService.loadPesi();
+          this.pesoService.loadPesi(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.success('Peso aggiunto con successo', 'Successo');
 			  }else{
-          this.pesoService.loadPesi();
+          this.pesoService.loadPesi(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.error('Peso non aggiunto', 'Errore');
 			  }
@@ -85,11 +78,11 @@ export class PesoComponent implements OnInit {
     this.peso.peso = this.peso_;
 		this.pesoService.modifyPeso(this.peso).subscribe((data) => {
 			if(data['code'] == 200){
-          this.pesoService.loadPesi();
+          this.pesoService.loadPesi(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.success('Peso modificato con successo', 'Successo');
 			  }else{
-          this.pesoService.loadPesi();
+          this.pesoService.loadPesi(this.authUser.id_atleta);
           this.modalService.dismissAll('Reason');
           this.toastr.error('Peso non modificato', 'Errore');
 			  }
@@ -99,11 +92,11 @@ export class PesoComponent implements OnInit {
   deleteNote(id_peso:number){
     this.pesoService.deletPeso(id_peso).subscribe((data) => {
 			if(data['code'] == 200){
-				this.pesoService.loadPesi();
+				this.pesoService.loadPesi(this.authUser.id_atleta);
 				this.modalService.dismissAll('Reason');
 				this.toastr.success('Peso eliminato con successo', 'Successo');
 			  }else{
-          this.pesoService.loadPesi();
+          this.pesoService.loadPesi(this.authUser.id_atleta);
 				this.modalService.dismissAll('Reason');
 				this.toastr.error('Peso non eliminato', 'Errore');
 			  }

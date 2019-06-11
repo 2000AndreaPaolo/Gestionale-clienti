@@ -24,8 +24,9 @@ export class PesoService {
     return this.pesi.asObservable();
   }
 
-  loadPesi(): void {
-    this.http.get<Pesi[]>(environment.apiUrl + '/admin/peso').subscribe(res => this.pesi.next(res));
+  loadPesi(id_atleta: number): void {
+    let headers = new HttpHeaders({});
+    this.http.post<Pesi[]>(environment.apiUrl + '/atleta/peso', JSON.stringify(id_atleta), { headers: headers }).subscribe(res => this.pesi.next(res));
   }
 
   addPeso(peso: Peso){
