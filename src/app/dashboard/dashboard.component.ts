@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   authUser: AuthUser;
   programma: Programma;
   programmazioni: Programmazioni[];
-  data: Date;
+  data_: Date;
   scheda: Scheda;
   progressioni: Progressioni[];
   id_specializzazione: number;
@@ -42,8 +42,9 @@ export class DashboardComponent implements OnInit {
         }
         //Programmazioni
         this.dashboardService.getProgrammazioneGiorno(this.programma.id_programma).subscribe((data:Programmazioni[]) => {
+          console.log(data);
           this.programmazioni = data;
-          this.data = data[0].data;
+          this.data_ = data[0].data;
         });
       });
     }else{
