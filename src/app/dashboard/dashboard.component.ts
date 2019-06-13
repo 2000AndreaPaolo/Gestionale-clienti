@@ -42,7 +42,6 @@ export class DashboardComponent implements OnInit {
         }
         //Programmazioni
         this.dashboardService.getProgrammazioneGiorno(this.programma.id_programma).subscribe((data:Programmazioni[]) => {
-          console.log(data);
           this.programmazioni = data;
           this.data_ = data[0].data;
         });
