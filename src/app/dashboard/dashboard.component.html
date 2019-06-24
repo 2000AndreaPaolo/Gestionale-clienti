@@ -2,19 +2,25 @@
 <div class="container">
     <div *ngIf="id_specializzazione == 1; then powerlifting else generico"></div>
     <ng-template #powerlifting>
-        <h3 class="title">Allenamento giornaliero</h3>
-        <div class="container mt-5 mb-5">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <ul class="timeline">
-                        <li>
-                            <h4>{{data_}}</h4>
-                            <p *ngFor="let programmazione of programmazioni">{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} al {{programmazione.carico}} {{programmazione.note}}</p>
-                        </li>
-                    </ul>
+        <div *ngIf="data_ == null; then vuoto else pieno"></div>
+        <ng-template #vuoto>
+            <h3 class="title">Oggi non è giorno di allenamento, riposati e preparati per domani</h3>
+        </ng-template>
+        <ng-template #pieno>
+            <h3 class="title">Allenamento giornaliero</h3>
+            <div class="container mt-5 mb-5">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <ul class="timeline">
+                            <li>
+                                <h4>{{data_}}</h4>
+                                <p *ngFor="let programmazione of programmazioni">{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} al {{programmazione.carico}} {{programmazione.note}}</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        </ng-template>
     </ng-template>
     <ng-template #generico>
         <h3 class="title">Allenamento settimanale</h3>
