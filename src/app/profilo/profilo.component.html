@@ -1,12 +1,12 @@
 <app-main-nav></app-main-nav>
 <div class="container">
-  <h5 class="title">Scadenza dell'obiettivo <countdown-timer [end]="countdown"></countdown-timer></h5>
-  <div class="peso">
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+  <div class="dati_utente">
+    <h5>Nome: {{authUser.nome}}</h5>
+    <br>
+    <h5>Cognome: {{authUser.cognome}}</h5>
+    <br>
+    <h5>Data di nascita: {{authUser.data_nascita}}</h5>
+    <br>
+    <h5>Prossimo check tra: <countdown-timer [end]="countdown"></countdown-timer></h5>
   </div>
 </div>
