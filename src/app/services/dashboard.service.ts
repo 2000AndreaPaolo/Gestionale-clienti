@@ -38,4 +38,9 @@ export class DashboardService {
     let headers = new HttpHeaders({});
     return this.http.post(environment.apiUrl + '/atleta/progressione', JSON.stringify(id_scheda), { headers: headers });
   }
+
+  getMassimale(id_atleta: number){
+    let headers = new HttpHeaders({});
+    return this.http.post(environment.apiUrl + '/admin/prestazione/massimale', JSON.stringify(id_atleta), { headers: headers });
+  }
 }

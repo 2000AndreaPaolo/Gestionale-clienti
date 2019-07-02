@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
           this.programmazioni = data;
           if(data[0].data != null){
             this.data_ = data[0].data;
+            this.calcolo_massimale(this.programmazioni);
           }else{
             this.data_ = null;
           }
@@ -83,5 +84,17 @@ export class DashboardComponent implements OnInit {
       }
     }
     return appoggio;
+  }
+
+  calcolo_massimale(programmazioni: Programmazioni[]){
+    this.dashboardService.getMassimale(this.authUser.id_atleta).subscribe((data: any) => {
+      for(let programmazione of programmazioni){
+        for(let dato of data){
+          if(programmazione.id_esercizio == dato[0].id_esercizio){
+            programmazione.carico = programmazione.carico * dato[0].peso / 100;
+          }
+        }
+      }
+    });
   }
 }
