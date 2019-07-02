@@ -11,6 +11,9 @@ export class ProfiloComponent implements OnInit {
 
   authUser: AuthUser;
   countdown: any;
+  massimale_squat: number;
+  massimale_panca: number;
+  massimale_stacco: number;
 
   constructor(
     private dashboardService:DashboardService
@@ -43,5 +46,19 @@ export class ProfiloComponent implements OnInit {
         this.countdown = scheda.data_fine;
       });
     }
+    this.dashboardService.getMassimale(this.authUser.id_atleta).subscribe((data: any) => {
+      console.log(data);
+      for(let dato of data){
+        if(dato[0].peso > 0){
+          if(dato[0].descrizione == "Panca piana"){
+            this.massimale_panca = dato[0].peso;
+          }else if(dato[0].descrizione == "Squat"){
+            this.massimale_squat = dato[0].peso;
+          }else if(dato[0].descrizione == "Stacco da terra"){
+            this.massimale_stacco = dato[0].peso;
+          }
+        }
+      }
+    });
   }
 }

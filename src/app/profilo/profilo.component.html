@@ -1,12 +1,42 @@
 <app-main-nav></app-main-nav>
 <div class="container">
-  <div class="dati_utente">
-    <h5>Nome: {{authUser.nome}}</h5>
-    <br>
-    <h5>Cognome: {{authUser.cognome}}</h5>
-    <br>
-    <h5>Data di nascita: {{authUser.data_nascita}}</h5>
-    <br>
-    <h5>Prossimo check tra: <countdown-timer [end]="countdown"></countdown-timer></h5>
-  </div>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th>Nome</th>
+      <td>{{authUser.nome}}</td>
+    </tr>
+    <tr>
+      <th>Cognome</th>
+      <td>{{authUser.cognome}}</td>
+    </tr>
+    <tr>
+      <th>Data di nascita</th>
+      <td>{{authUser.data_nascita}}</td>
+    </tr>
+    <tr>
+      <th>Prossimo check</th>
+      <td><countdown-timer [end]="countdown"></countdown-timer></td>
+    </tr>
+    <div *ngIf="massimale_panca != null; then esiste"></div>
+    <ng-template #esiste>
+        <tr>
+          <th>Massimale di Panca piana</th>
+          <td>{{massimale_panca}} kg</td>
+        </tr>
+    </ng-template>
+    <div *ngIf="massimale_squat != null; then esiste1"></div>
+    <ng-template #esiste1>
+        <tr>
+          <th>Massimale di Squat</th>
+          <td>{{massimale_squat}} kg</td>
+        </tr>
+    </ng-template>
+    <div *ngIf="massimale_stacco != null; then esiste2"></div>
+    <ng-template #esiste2>
+        <tr>
+          <th>Massimale di Stacco da terra</th>
+          <td>{{massimale_stacco}} kg</td>
+        </tr>
+    </ng-template>
+  </table>
 </div>
