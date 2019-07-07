@@ -47,7 +47,6 @@ export class ProfiloComponent implements OnInit {
       });
     }
     this.dashboardService.getMassimale(this.authUser.id_atleta).subscribe((data: any) => {
-      console.log(data);
       for(let dato of data){
         if(dato[0].peso > 0){
           if(dato[0].descrizione == "Panca piana"){

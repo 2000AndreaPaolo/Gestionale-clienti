@@ -43,4 +43,14 @@ export class AuthenticationService {
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
+
+  modifyPassword(id_studente: number, odlpassword:string,newpassword:string){
+    let headers = new HttpHeaders({});
+    let body = {
+      'id': id_studente,
+      'oldpassword': odlpassword,
+      'newpassword': newpassword,
+    };
+    return this.http.post(environment.apiUrl +  '/atleta/password', JSON.stringify(body) , { headers: headers });
+  }
 }

@@ -17,6 +17,7 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { ProfiloComponent } from './profilo/profilo.component';
 import { NoteComponent } from './note/note.component';
 import { PesoComponent } from './peso/peso.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { PesoComponent } from './peso/peso.component';
     MainNavComponent,
     ProfiloComponent,
     NoteComponent,
-    PesoComponent
+    PesoComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
