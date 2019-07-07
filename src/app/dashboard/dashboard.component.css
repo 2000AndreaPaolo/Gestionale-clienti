@@ -33,3 +33,8 @@ ul.timeline > li:before {
     height: 20px;
     z-index: 400;
 }
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}

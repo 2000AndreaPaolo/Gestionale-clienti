@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { DashboardService } from '../services/dashboard.service';
 import { AuthenticationService } from '../services/authentication.service';
@@ -14,6 +15,8 @@ export class DashboardComponent implements OnInit {
   authUser: AuthUser;
   programma: Programma;
   programmazioni: Programmazioni[];
+  programmazioni_popup: Programmazioni[];
+  vet_date: any [] = [];
   data_: Date;
   scheda: Scheda;
   progressioni: Progressioni[];
@@ -23,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService:DashboardService,
+    private modalService: NgbModal,
     private authService: AuthenticationService
   ){}
 
@@ -97,6 +101,25 @@ export class DashboardComponent implements OnInit {
           }
         }
       }
+    });
+  }
+
+  openPopUp(conten: any){
+    this.dashboardService.getProgrammazione().subscribe((data: Programmazioni[]) => {
+      let appoggio: any[] = [];
+      let appoggio_data: any[] = [];
+      this.vet_date = [];
+      this.programmazioni_popup = [];
+      for(let dato of data){
+        if(dato.id_programma == this.programma.id_programma){
+          appoggio.push(dato);
+          appoggio_data.push(dato.data);
+        }
+      }
+      this.programmazioni_popup = appoggio;
+      appoggio_data = appoggio_data.filter((el, i, a) => i === a.indexOf(el))
+      this.vet_date = appoggio_data;
+      this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
     });
   }
 }

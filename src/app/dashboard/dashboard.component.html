@@ -8,6 +8,9 @@
         </ng-template>
         <ng-template #pieno>
             <h3 class="title">Allenamento giornaliero</h3>
+            <div class="col-md-4 text-center"> 
+                <button class="btn btn-success" type="button" (click)="openPopUp(view_programma)">Visualizza programma completo</button> 
+            </div>
             <div class="container mt-5 mb-5">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
@@ -44,3 +47,28 @@
         </div>
     </ng-template>
 </div>
+
+
+<ng-template #view_programma let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Programma completo</h4>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-6 offset-md-3">
+            <ul class="timeline" *ngFor="let data of vet_date">
+                <li>
+                    <h4>{{data}}</h4>
+                    <div *ngFor="let programmazione of programmazioni_popup">
+                        <div *ngIf="data == programmazione.data; then ok"></div>
+                        <ng-template #ok>
+                            <p>{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg <br>Note: {{programmazione.note}}</p>
+                        </ng-template>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" style="display: inline;" (click)="modal.dismiss()">Annulla</button>
+    </div>
+  </ng-template>
