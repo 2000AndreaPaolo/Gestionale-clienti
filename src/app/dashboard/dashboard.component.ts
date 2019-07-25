@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   id_specializzazione: number;
   vet_giorni: number [] = [1,2,3,4,5,6,7];
   max_giorni: number = null;
+  filtro_data: Date;
 
   constructor(
     private dashboardService:DashboardService,
@@ -105,21 +106,31 @@ export class DashboardComponent implements OnInit {
   }
 
   openPopUp(conten: any){
-    this.dashboardService.getProgrammazione().subscribe((data: Programmazioni[]) => {
-      let appoggio: any[] = [];
+    this.dashboardService.getProgrammazione(this.programma.id_programma).subscribe((data: Programmazioni[]) => {
       let appoggio_data: any[] = [];
       this.vet_date = [];
       this.programmazioni_popup = [];
       for(let dato of data){
-        if(dato.id_programma == this.programma.id_programma){
-          appoggio.push(dato);
-          appoggio_data.push(dato.data);
-        }
+        appoggio_data.push(dato.data);
       }
-      this.programmazioni_popup = appoggio;
+      this.programmazioni_popup = data;
       appoggio_data = appoggio_data.filter((el, i, a) => i === a.indexOf(el))
       this.vet_date = appoggio_data;
       this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
+    });
+  }
+
+  onChangeData(){
+    let appoggio = [];
+    this.programmazioni_popup = [];
+    this.dashboardService.getProgrammazione(this.programma.id_programma).subscribe((data: Programmazioni[]) => {
+      for(let dato of data){
+        if(dato.data == this.filtro_data){
+          appoggio.push(dato);
+        }
+      }
+      this.programmazioni_popup = appoggio;
+      console.log(this.programmazioni_popup);
     });
   }
 }

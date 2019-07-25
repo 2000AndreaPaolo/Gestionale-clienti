@@ -38,3 +38,7 @@ ul.timeline > li:before {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
 }
+
+.datepicker{
+    z-index:1151 !important;
+}

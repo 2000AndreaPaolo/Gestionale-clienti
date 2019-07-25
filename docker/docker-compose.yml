@@ -3,10 +3,19 @@ version: '3'
 services:
   nginx:
     build: ../
-    ports:
-      - 80:80
-      - 443:443
+    environment:
+      - NGINX_PORT=80
+    networks:
+      - proxy
     container_name: clienti-nginx
     expose:
       - 80
-      - 443
+    labels:
+      - "traefik.port=80"
+      - 'traefik.backend=gestionale-admin'
+      - 'traefik.enable=true'
+      - "traefik.frontend.rule=Host:admin.localhost"
+
+networks:
+  proxy:
+    external: true

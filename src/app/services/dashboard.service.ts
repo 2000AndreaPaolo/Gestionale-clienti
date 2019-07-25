@@ -19,9 +19,9 @@ export class DashboardService {
     return this.http.post(environment.apiUrl + '/atleta/programma', JSON.stringify(id_atleta), { headers: headers });
   }
 
-  getProgrammazione(){
+  getProgrammazione(id_programma: number){
     let headers = new HttpHeaders({});
-    return this.http.get(environment.apiUrl + '/admin/programmazione', { headers: headers });
+    return this.http.post(environment.apiUrl + '/admin/get/programmazione', JSON.stringify(id_programma), { headers: headers });
   }
 
   getProgrammazioneGiorno(id_programma: number){
