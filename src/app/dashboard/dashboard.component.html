@@ -5,6 +5,9 @@
         <div *ngIf="data_ == null; then vuoto else pieno"></div>
         <ng-template #vuoto>
             <h3 class="title">Oggi non è giorno di allenamento, riposati e preparati per domani</h3>
+            <div class="col-md-4 text-center"> 
+                <button class="btn btn-success" type="button" (click)="openPopUp(view_programma)">Visualizza programma completo</button> 
+            </div>
         </ng-template>
         <ng-template #pieno>
             <h3 class="title">Allenamento giornaliero</h3>

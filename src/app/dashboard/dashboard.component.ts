@@ -123,10 +123,14 @@ export class DashboardComponent implements OnInit {
   onChangeData(){
     let appoggio = [];
     this.programmazioni_popup = [];
+    this.vet_date = [];
     this.dashboardService.getProgrammazione(this.programma.id_programma).subscribe((data: Programmazioni[]) => {
       for(let dato of data){
         if(dato.data == this.filtro_data){
           appoggio.push(dato);
+        }
+        if(this.vet_date.length == 0){
+          this.vet_date.push(this.filtro_data);
         }
       }
       this.programmazioni_popup = appoggio;
