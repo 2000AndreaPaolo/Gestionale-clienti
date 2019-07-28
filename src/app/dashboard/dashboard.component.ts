@@ -113,6 +113,7 @@ export class DashboardComponent implements OnInit {
       for(let dato of data){
         appoggio_data.push(dato.data);
       }
+      this.calcolo_massimale(data);
       this.programmazioni_popup = data;
       appoggio_data = appoggio_data.filter((el, i, a) => i === a.indexOf(el))
       this.vet_date = appoggio_data;
