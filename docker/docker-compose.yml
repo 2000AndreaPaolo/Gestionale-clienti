@@ -14,7 +14,7 @@ services:
       - "traefik.port=80"
       - 'traefik.backend=gestionale-clienti'
       - 'traefik.enable=true'
-      - "traefik.frontend.rule=Host:tridentescarface.com"
+      - "traefik.frontend.rule=Host:www.tridentescarface.com"
 
 networks:
   proxy:
