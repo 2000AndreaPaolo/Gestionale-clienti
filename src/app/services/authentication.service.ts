@@ -12,16 +12,23 @@ import { Auth } from '../model_body'
 export class AuthenticationService {
 
   private currentUserSubject: BehaviorSubject<AuthUser>;
+  private localUserSubject: BehaviorSubject<AuthUser>;
   public currentUser: Observable<AuthUser>;
   user: AuthUser;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<AuthUser>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.localUserSubject = new BehaviorSubject<AuthUser>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.localUserSubject.asObservable();
   }
 
   currentUserValue(): AuthUser {
     return this.currentUserSubject.value;
+  }
+
+  localUserValue(): AuthUser {
+    return this.localUserSubject.value;
   }
 
   login(auth:Auth): Observable<number> {
@@ -30,6 +37,7 @@ export class AuthenticationService {
         map((user: AuthUser) => {
          if (user.id_atleta) {
             sessionStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
             return 1;
           }else if(user.code === 401)
@@ -41,6 +49,7 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 
