@@ -8,9 +8,11 @@ import { ProfiloComponent } from './profilo/profilo.component';
 import { NoteComponent } from './note/note.component';
 import { PesoComponent } from './peso/peso.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProgrammaCompletoComponent } from './programma-completo/programma-completo.component';
 const routes: Routes = [
   { path: 'login', component:LoginComponent },
   { path: 'dashboard', component:DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'programma', component:ProgrammaCompletoComponent, canActivate: [AuthGuard] },
   { path: 'profilo', component:ProfiloComponent, canActivate: [AuthGuard] },
   { path: 'note', component:NoteComponent, canActivate: [AuthGuard] },
   { path: 'peso', component:PesoComponent, canActivate: [AuthGuard] },

@@ -18,6 +18,7 @@ import { ProfiloComponent } from './profilo/profilo.component';
 import { NoteComponent } from './note/note.component';
 import { PesoComponent } from './peso/peso.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProgrammaCompletoComponent } from './programma-completo/programma-completo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ProfiloComponent,
     NoteComponent,
     PesoComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProgrammaCompletoComponent
   ],
   imports: [
     BrowserModule,

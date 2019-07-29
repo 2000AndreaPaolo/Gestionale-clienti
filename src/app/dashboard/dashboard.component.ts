@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 import { DashboardService } from '../services/dashboard.service';
-import { AuthenticationService } from '../services/authentication.service';
 import { Programmi, Programmazioni, Schede, Progressioni, AuthUser } from '../model';
 import { Programma, Programmazione, Scheda, Progressione } from '../model_body';
 @Component({
@@ -26,9 +25,8 @@ export class DashboardComponent implements OnInit {
   filtro_data: Date;
 
   constructor(
-    private dashboardService:DashboardService,
-    private modalService: NgbModal,
-    private authService: AuthenticationService
+    private router: Router,
+    private dashboardService:DashboardService
   ){}
 
   ngOnInit(){
@@ -105,37 +103,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openPopUp(conten: any){
-    this.dashboardService.getProgrammazione(this.programma.id_programma).subscribe((data: Programmazioni[]) => {
-      let appoggio_data: any[] = [];
-      this.vet_date = [];
-      this.programmazioni_popup = [];
-      for(let dato of data){
-        appoggio_data.push(dato.data);
-      }
-      this.calcolo_massimale(data);
-      this.programmazioni_popup = data;
-      appoggio_data = appoggio_data.filter((el, i, a) => i === a.indexOf(el))
-      this.vet_date = appoggio_data;
-      this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
-    });
-  }
-
-  onChangeData(){
-    let appoggio = [];
-    this.programmazioni_popup = [];
-    this.vet_date = [];
-    this.dashboardService.getProgrammazione(this.programma.id_programma).subscribe((data: Programmazioni[]) => {
-      for(let dato of data){
-        if(dato.data == this.filtro_data){
-          appoggio.push(dato);
-        }
-        if(this.vet_date.length == 0){
-          this.vet_date.push(this.filtro_data);
-        }
-      }
-      this.programmazioni_popup = appoggio;
-      console.log(this.programmazioni_popup);
-    });
+  view(){
+    this.router.navigate(['/programma']);
   }
 }

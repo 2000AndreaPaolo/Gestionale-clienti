@@ -1,0 +1,28 @@
+<app-main-nav></app-main-nav>
+<div class="container">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Programma completo</h4>
+  </div>
+  <div class="modal-body">
+      <form>
+          <div class="form-group">
+              <div class="input-group">
+                  <input type="date" class="form-control datepicker" [(ngModel)]="filtro_data" [ngModelOptions]="{standalone: true}" required (input)="onChangeData()" >
+              </div>  
+          </div>
+      </form>
+      <div class="col-md-6 offset-md-3">
+          <ul class="timeline" *ngFor="let data of vet_date">
+              <li>
+                  <h4>{{data}}</h4>
+                  <div *ngFor="let programmazione of programmazioni">
+                      <div *ngIf="data == programmazione.data; then ok"></div>
+                      <ng-template #ok>
+                          <p>{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg <br>Note: {{programmazione.note}}</p>
+                      </ng-template>
+                  </div>
+              </li>
+          </ul>
+      </div>
+  </div>
+</div>
