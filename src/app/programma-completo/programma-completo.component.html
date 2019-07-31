@@ -12,17 +12,23 @@
           </div>
       </form>
       <div class="col-md-6 offset-md-3">
-          <ul class="timeline" *ngFor="let data of vet_date">
-              <li>
-                  <h4>{{data}}</h4>
-                  <div *ngFor="let programmazione of programmazioni">
-                      <div *ngIf="data == programmazione.data; then ok"></div>
-                      <ng-template #ok>
-                          <p>{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg <br>Note: {{programmazione.note}}</p>
-                      </ng-template>
-                  </div>
-              </li>
-          </ul>
+        <div *ngIf="programmazioni == 0; then vuoto else pieno"></div>
+        <ng-template #pieno>
+            <ul class="timeline" *ngFor="let data of vet_date">
+                <li>
+                    <h4>{{data}}</h4>
+                    <div *ngFor="let programmazione of programmazioni">
+                        <div *ngIf="data == programmazione.data; then ok"></div>
+                        <ng-template #ok>
+                            <p>{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg <br>Note: {{programmazione.note}}</p>
+                        </ng-template>
+                    </div>
+                </li>
+            </ul>
+        </ng-template>
+        <ng-template #vuoto>
+            <h3 class="title">Non è previsto nessun allenamento</h3>
+        </ng-template>
       </div>
   </div>
 </div>
