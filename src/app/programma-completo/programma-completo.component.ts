@@ -29,6 +29,7 @@ export class ProgrammaCompletoComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
     this.programma = new Programma();
+    this.programmazioni = null;
       this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data:Programmi[]) => {
         for(let dato of data){
           /*if(this.programma){
