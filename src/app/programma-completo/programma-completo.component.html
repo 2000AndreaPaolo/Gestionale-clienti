@@ -19,9 +19,16 @@
                     <h4>{{data}}</h4>
                     <div *ngFor="let programmazione of programmazioni">
                         <div *ngIf="data == programmazione.data; then ok"></div>
-                        <ng-template #ok>
-                            <p>{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg <br>Note: {{programmazione.note}}</p>
-                        </ng-template>
+                        <p>
+                            <ng-template #ok>
+                                    <strong>{{programmazione.nome_esercizio}}</strong>: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg 
+                                    <br>
+                                    <div *ngIf="programmazione.note != ''; then note_ok else note_no"></div>
+                                    <ng-template #note_ok>
+                                        Note: {{programmazione.note}}
+                                    </ng-template>
+                            </ng-template>
+                        </p>
                     </div>
                 </li>
             </ul>

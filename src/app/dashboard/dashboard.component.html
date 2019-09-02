@@ -21,6 +21,14 @@
                             <li>
                                 <h4>{{data_}}</h4>
                                 <p *ngFor="let programmazione of programmazioni">{{programmazione.nome_esercizio}}: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg <br>Note: {{programmazione.note}}</p>
+                                <div *ngFor="let programmazione of programmazioni">
+                                    <strong>{{programmazione.nome_esercizio}}</strong>: {{programmazione.serie}} x {{programmazione.ripetizioni}} con {{programmazione.carico}} kg
+                                    <br>
+                                    <div *ngIf="programmazione.note != ''; then note_ok else note_no"></div>
+                                    <ng-template #note_ok>
+                                        Note: {{programmazione.note}}
+                                    </ng-template>
+                                </div>
                             </li>
                         </ul>
                     </div>

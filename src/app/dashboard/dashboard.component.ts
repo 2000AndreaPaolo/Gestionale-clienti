@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
       this.programma = new Programma();
       this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data:Programmi[]) => {
         for(let dato of data){
-          if(this.programma){
+          if(this.programma.data_fine == null){
             this.programma = dato;
           }else if(this.programma.data_fine < dato.data_inizio){
             this.programma = dato;

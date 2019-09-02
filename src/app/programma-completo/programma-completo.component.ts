@@ -39,10 +39,8 @@ export class ProgrammaCompletoComponent implements OnInit {
           }*/
           if(this.programma.data_fine == null){
             this.programma = dato;
-            console.log(this.programma);
           }else if(this.programma.data_fine < dato.data_inizio){
             this.programma = dato;
-            console.log(this.programma);
           }
         }
         this.view();
@@ -51,7 +49,6 @@ export class ProgrammaCompletoComponent implements OnInit {
 
   view(){
     this.dashboardService.getProgrammazione(this.programma.id_programma).subscribe((data: Programmazioni[]) => {
-      console.log(data);
       let appoggio_data: any[] = [];
       this.vet_date = [];
       this.programmazioni = [];
