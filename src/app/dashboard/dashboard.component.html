@@ -47,7 +47,7 @@
                             <li>
                                 <h4>Giorno {{giorni}}</h4>
                                 <p *ngFor="let progressione of progressioniFiltrate(giorni)">
-                                    {{progressione.nome_esercizio}}: {{progressione.serie}} x {{progressione.ripetizioni}} {{progressione.note}}
+                                    <strong>{{progressione.nome_esercizio}}</strong>: {{progressione.serie}} x {{progressione.ripetizioni}} {{progressione.note}}
                                 </p>
                             </li>
                         </ng-template>
