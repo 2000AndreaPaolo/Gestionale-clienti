@@ -2,6 +2,7 @@
 <div class="container">
   <h3 class="title">Lista dei pesi</h3>
   <button class="btn btn-success" type="button" id="addPeso" (click)="openPopUp(0, peso_add_modify)">Aggiungi peso</button>
+  <button class="btn btn-info" type="button" (click)="openStatistiche(statistiche)">Statistiche</button>
   <table class="table table-bordered table-striped">
 	<thead class="thead-dark">
       <tr>
@@ -58,4 +59,40 @@
           <ng-template #aggiungibtn><button type="button" class="btn btn-success" (click)="addPeso()">Aggiungi</button></ng-template>
           <ng-template #modificabtn><button type="button" class="btn btn-success" (click)="modifyPeso()">Modifica</button></ng-template>
 	</div>
+</ng-template>
+
+<ng-template #statistiche let-modal>
+  <div class="container">
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title"> Statistiche relative al peso</h4>
+      </div>
+      <div class="modal-body">
+          <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th>Classificazione</th>
+                <th>Peso</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Peso più alto</td>
+                <td>{{peso_alto}}</td>
+                <td>{{data_alto}}</td>
+              </tr>
+              <tr>
+                  <td>Peso più basso</td>
+                  <td>{{peso_basso}}</td>
+                  <td>{{data_basso}}</td>
+                </tr>
+                <tr>
+                    <td>Media del peso</td>
+                    <td>{{peso_alto}}</td>
+                    <td></td>
+                  </tr>
+            </tbody>
+          </table>
+      </div>
+  </div>
 </ng-template>

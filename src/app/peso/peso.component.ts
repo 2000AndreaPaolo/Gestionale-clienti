@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PesoService } from '../services/peso.service';
 import { Pesi, AuthUser } from '../model';
 import { Peso } from '../model_body';
+import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 @Component({
   selector: 'app-peso',
   templateUrl: './peso.component.html',
@@ -20,6 +21,15 @@ export class PesoComponent implements OnInit {
   peso_: number;
   note: string;
   page:number;
+
+  //Statistiche
+  peso_basso: number = Infinity;
+  data_basso: Date = null;
+  nota_basso: string = null;
+  peso_alto: number = 0;
+  data_alto: Date = null;
+  nota_alto: string = null;
+  peso_media: number = 0;
 
   constructor(
     private pesoService: PesoService,
@@ -101,5 +111,28 @@ export class PesoComponent implements OnInit {
 				this.toastr.error('Peso non eliminato', 'Errore');
 			  }
 		});
+  }
+
+  openStatistiche(conten: any){
+    for(let peso of this.pesi){
+      if(this.peso_alto < peso.peso){
+        this.peso_alto = peso.peso;
+        this.data_alto = peso.data;
+        this.nota_alto = peso.note;
+      }
+      if(this.peso_basso > peso.peso){
+        this.peso_basso = peso.peso;
+        this.data_basso = peso.data;
+        this.nota_basso = peso.note;
+      }
+    }
+    let sommatoria:number = 0;
+    let conta:number = 0;
+    for(let peso of this.pesi){
+      sommatoria += peso.peso;
+      conta += 1;
+    }
+    this.peso_media = sommatoria / conta;
+    this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
   }
 }
