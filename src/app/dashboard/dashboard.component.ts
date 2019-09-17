@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
         for(let dato of data){
           if(this.programma.data_fine == null){
             this.programma = dato;
-          }else if(this.programma.data_fine < dato.data_inizio){
+          }else if(this.programma.data_fine > dato.data_inizio){
             this.programma = dato;
           }
         }
@@ -60,9 +60,9 @@ export class DashboardComponent implements OnInit {
       this.scheda = new Scheda();
       this.dashboardService.getScheda(this.authUser.id_atleta).subscribe((data: Schede[]) => {
         for(let dato of data){
-          if(this.scheda){
+          if(this.scheda.data_inizio == null){
             this.scheda = dato;
-          }else if(this.scheda.data_fine < dato.data_inizio){
+          }else if(this.scheda.data_fine > dato.data_inizio){
             this.scheda = dato;
           }
         }
