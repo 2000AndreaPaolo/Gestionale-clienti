@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
         for(let dato of data){
           if(this.programma.data_fine == null){
             this.programma = dato;
-          }else if(this.programma.data_fine > dato.data_inizio){
+          }else if(this.programma.data_fine < dato.data_inizio){
             this.programma = dato;
           }
         }
