@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {formatDate} from '@angular/common';
 
 import { DashboardService } from '../services/dashboard.service';
 import { Programmi, Programmazioni, Schede, Progressioni, AuthUser } from '../model';
@@ -59,10 +60,12 @@ export class DashboardComponent implements OnInit {
     }else{
       this.scheda = new Scheda();
       this.dashboardService.getScheda(this.authUser.id_atleta).subscribe((data: Schede[]) => {
+       let primo=1;
         for(let dato of data){
-          if(this.scheda.data_inizio == null){
+          if(primo == 1){
             this.scheda = dato;
-          }else if(this.scheda.data_fine > dato.data_inizio){
+            primo ++;
+          }else if((new Date(dato.data_inizio)).getTime() > (new Date(this.scheda.data_fine)).getTime() && (new Date).getTime() > (new Date(this.scheda.data_fine)).getTime()){
             this.scheda = dato;
           }
         }
