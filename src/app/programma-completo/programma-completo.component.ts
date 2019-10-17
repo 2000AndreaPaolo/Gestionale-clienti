@@ -87,6 +87,7 @@ export class ProgrammaCompletoComponent implements OnInit {
           this.vet_date.push(this.filtro_data);
         }
       }
+      this.calcolo_massimale(appoggio);
       this.programmazioni = appoggio;
     });
   }
