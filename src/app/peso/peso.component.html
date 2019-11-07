@@ -1,4 +1,5 @@
 <app-main-nav></app-main-nav>
+<ngx-spinner></ngx-spinner>
 <div class="container">
   <h3 class="title">Lista dei pesi</h3>
   <button class="btn btn-success" type="button" id="addPeso" (click)="openPopUp(0, peso_add_modify)">Aggiungi peso</button>
@@ -13,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let peso of pesi | paginate: { itemsPerPage: 20, currentPage: page }">
+      <tr *ngFor="let peso of pesi | paginate: { itemsPerPage: 5, currentPage: page }">
         <td class="center_object">{{peso.peso}}</td>
         <td class="center_object">{{peso.data}}</td>
         <td class="center_object">{{peso.note}}</td>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { NoteService } from '../services/note.service';
 import { Note, AuthUser } from '../model';
@@ -22,16 +23,21 @@ export class NoteComponent implements OnInit {
   constructor(
     private noteService: NoteService,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ){}
 
   ngOnInit() {
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.nota = new Nota();
-    this.noteService.getNote().subscribe((data: Note[]) => {
-      this.note = data;
-    });
-    this.noteService.loadNote(this.authUser.id_atleta);
+    this.spinner.show();
+    setTimeout(() => {
+      this.nota = new Nota();
+      this.noteService.getNote().subscribe((data: Note[]) => {
+        this.note = data;
+      });
+      this.noteService.loadNote(this.authUser.id_atleta);
+      this.spinner.hide();
+    }, 1000);
   }
 
   openPopUp(id_note: number, conten: any) {

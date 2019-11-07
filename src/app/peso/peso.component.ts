@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { PesoService } from '../services/peso.service';
 import { Pesi, AuthUser } from '../model';
 import { Peso } from '../model_body';
-import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 @Component({
   selector: 'app-peso',
   templateUrl: './peso.component.html',
@@ -34,34 +34,39 @@ export class PesoComponent implements OnInit {
   constructor(
     private pesoService: PesoService,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
   ){}
 
   ngOnInit(){
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.peso = new Peso();
-    this.pesoService.getPesi().subscribe((data: Pesi[]) => {
-      this.pesi = data;
-    });
-    this.pesoService.loadPesi(this.authUser.id_atleta);
+    this.spinner.show();
+    setTimeout(() => {
+      this.peso = new Peso();
+      this.pesoService.getPesi().subscribe((data: Pesi[]) => {
+        this.pesi = data;
+      });
+      this.pesoService.loadPesi(this.authUser.id_atleta);
+      this.spinner.hide();
+    },1000);
   }
 
   openPopUp(id_peso: number, conten: any) {
-		this.id_peso = id_peso;
-		if (this.id_peso != 0) {
-			for(let peso of this.pesi){
-				if(peso.id_peso == this.id_peso){
+    this.id_peso = id_peso;
+    if (this.id_peso != 0) {
+      for(let peso of this.pesi){
+        if(peso.id_peso == this.id_peso){
           this.note = peso.note;
           this.peso_ = peso.peso;
-				}
-			}
-			this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
-		} else {
+        }
+      }
+      this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
+    } else {
       this.id_atleta = null;
       this.note = null;
       this.peso_ = null;
-			this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
-		}
+      this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
+    }
   }
 
   addPeso() {

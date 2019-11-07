@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { AuthUser, Programmi, Schede } from '../model';
 import { DashboardService } from '../services/dashboard.service';
@@ -16,48 +17,53 @@ export class ProfiloComponent implements OnInit {
   massimale_stacco: number;
 
   constructor(
-    private dashboardService:DashboardService
+    private dashboardService:DashboardService,
+    private spinner: NgxSpinnerService
   ){}
 
   ngOnInit(){
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    if(this.authUser.id_specializzazione == 1){
-      this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data: Programmi[]) => {
-        let programma=null;
-        for(let dato of data){
-          if(programma == null){
-            programma = dato;
-          }else if(programma.data_fine < dato.data_inizio){
-            programma = dato;
+    this.spinner.show();
+    setTimeout(() => {
+      if(this.authUser.id_specializzazione == 1){
+        this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data: Programmi[]) => {
+          let programma=null;
+          for(let dato of data){
+            if(programma == null){
+              programma = dato;
+            }else if(programma.data_fine < dato.data_inizio){
+              programma = dato;
+            }
           }
-        }
-        this.countdown = programma.data_fine;
-      });
-    }else{
-      this.dashboardService.getScheda(this.authUser.id_atleta).subscribe((data: Schede[]) => {
-        let scheda=null;
-        for(let dato of data){
-          if(scheda == null){
-            scheda = dato;
-          }else if(scheda.data_fine < dato.data_inizio){
-            scheda = dato;
+          this.countdown = programma.data_fine;
+        });
+      }else{
+        this.dashboardService.getScheda(this.authUser.id_atleta).subscribe((data: Schede[]) => {
+          let scheda=null;
+          for(let dato of data){
+            if(scheda == null){
+              scheda = dato;
+            }else if(scheda.data_fine < dato.data_inizio){
+              scheda = dato;
+            }
           }
-        }
-        this.countdown = scheda.data_fine;
-      });
-    }
-    this.dashboardService.getMassimale(this.authUser.id_atleta).subscribe((data: any) => {
-      for(let dato of data){
-        if(dato[0].peso > 0){
-          if(dato[0].descrizione == "Panca piana"){
-            this.massimale_panca = dato[0].peso;
-          }else if(dato[0].descrizione == "Squat"){
-            this.massimale_squat = dato[0].peso;
-          }else if(dato[0].descrizione == "Stacco da terra"){
-            this.massimale_stacco = dato[0].peso;
-          }
-        }
+          this.countdown = scheda.data_fine;
+        });
       }
-    });
+      this.dashboardService.getMassimale(this.authUser.id_atleta).subscribe((data: any) => {
+        for(let dato of data){
+          if(dato[0].peso > 0){
+            if(dato[0].descrizione == "Panca piana"){
+              this.massimale_panca = dato[0].peso;
+            }else if(dato[0].descrizione == "Squat"){
+              this.massimale_squat = dato[0].peso;
+            }else if(dato[0].descrizione == "Stacco da terra"){
+              this.massimale_stacco = dato[0].peso;
+            }
+          }
+        }
+      });
+      this.spinner.hide();
+    }, 1000);
   }
 }

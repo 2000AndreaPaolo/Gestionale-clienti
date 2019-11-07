@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { DashboardService } from '../services/dashboard.service';
 import { Programmi, Programmazioni, AuthUser } from '../model';
@@ -20,31 +21,36 @@ export class ProgrammaCompletoComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dashboardService:DashboardService
+    private dashboardService:DashboardService,
+    private spinner: NgxSpinnerService
   ){}
 
   ngOnInit(){
     this.authUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    if(this.authUser.id_specializzazione != 1){
-      this.router.navigate(['/dashboard']);
-    }
-    this.programma = new Programma();
-    this.programmazioni = null;
-      this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data:Programmi[]) => {
-        for(let dato of data){
-          /*if(this.programma){
-            this.programma = dato;
-          }else if(this.programma.data_fine < dato.data_inizio){
-            this.programma = dato;
-          }*/
-          if(this.programma.data_fine == null){
-            this.programma = dato;
-          }else if(this.programma.data_fine < dato.data_inizio){
-            this.programma = dato;
+    this.spinner.show();
+    setTimeout(() => {
+      if(this.authUser.id_specializzazione != 1){
+        this.router.navigate(['/dashboard']);
+      }
+      this.programma = new Programma();
+      this.programmazioni = null;
+        this.dashboardService.getProgramma(this.authUser.id_atleta).subscribe((data:Programmi[]) => {
+          for(let dato of data){
+            /*if(this.programma){
+              this.programma = dato;
+            }else if(this.programma.data_fine < dato.data_inizio){
+              this.programma = dato;
+            }*/
+            if(this.programma.data_fine == null){
+              this.programma = dato;
+            }else if(this.programma.data_fine < dato.data_inizio){
+              this.programma = dato;
+            }
           }
-        }
-        this.view();
-    });
+          this.view();
+      });
+      this.spinner.hide();
+    },1500);
   }
 
   view(){
