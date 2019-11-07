@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Chart } from 'angular-highcharts';
 
 import { PesoService } from '../services/peso.service';
 import { Pesi, AuthUser } from '../model';
 import { Peso } from '../model_body';
+import { Series } from 'highcharts';
 @Component({
   selector: 'app-peso',
   templateUrl: './peso.component.html',
@@ -31,6 +33,8 @@ export class PesoComponent implements OnInit {
   nota_alto: string = null;
   peso_media: number = 0;
 
+  chart: Chart;
+
   constructor(
     private pesoService: PesoService,
     private modalService: NgbModal,
@@ -45,6 +49,7 @@ export class PesoComponent implements OnInit {
       this.peso = new Peso();
       this.pesoService.getPesi().subscribe((data: Pesi[]) => {
         this.pesi = data;
+        this.initChart();
       });
       this.pesoService.loadPesi(this.authUser.id_atleta);
       this.spinner.hide();
@@ -139,5 +144,28 @@ export class PesoComponent implements OnInit {
     }
     this.peso_media = sommatoria / conta;
     this.modalService.open(conten, { ariaLabelledBy: 'modal-basic-titile' });
+  }
+
+  initChart(){
+    let chart = new Chart({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: 'Grafico'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: 'Peso',
+        data: [],
+        type: undefined,
+      }]
+    });
+    for(let peso of this.pesi){
+      chart.addPoint(peso.peso);
+    }
+    this.chart = chart;
   }
 }
