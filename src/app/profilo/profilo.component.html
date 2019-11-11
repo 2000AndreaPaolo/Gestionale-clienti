@@ -41,3 +41,10 @@
     </ng-template>
   </table>
 </div>
+<div *ngIf="id_specializzazione == 1; then powerlifting">
+</div>
+<ng-template #powerlifting>
+  <div [chart]="chart_squat"></div>
+  <div [chart]="chart_panca"></div>
+  <div [chart]="chart_stacco"></div>
+</ng-template>

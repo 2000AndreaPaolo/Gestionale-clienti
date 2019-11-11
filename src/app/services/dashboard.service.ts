@@ -43,4 +43,8 @@ export class DashboardService {
     let headers = new HttpHeaders({});
     return this.http.post(environment.apiUrl + '/admin/prestazione/massimale', JSON.stringify(id_atleta), { headers: headers });
   }
+  getMassimaleGrafico(id_atleta: number){
+    let headers = new HttpHeaders({});
+    return this.http.post(environment.apiUrl + '/admin/prestazione/massimale/powerlifting', JSON.stringify(id_atleta), { headers: headers });
+  }
 }
