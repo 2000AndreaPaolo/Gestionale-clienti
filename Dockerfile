@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm run ng build -- --prod --output-path=dist
+RUN npm run ng build -- --prod --build-optimizer --output-path=dist
 
 FROM nginx:1.14.1-alpine
 
