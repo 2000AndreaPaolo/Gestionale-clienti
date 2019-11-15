@@ -147,6 +147,8 @@ export class PesoComponent implements OnInit {
   }
 
   initChart(){
+    let pesi = this.pesi;
+    pesi.reverse();
     let chart = new Chart({
       chart: {
         type: 'line'
