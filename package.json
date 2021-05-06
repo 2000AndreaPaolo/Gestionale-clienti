@@ -24,7 +24,7 @@
     "angular-highcharts": "^8.0.3",
     "bootstrap": "^4.3.1",
     "font-awesome": "^4.7.0",
-    "highcharts": "^7.2.1",
+    "highcharts": "^9.0.0",
     "ngx-countdown-timer": "^0.1.9",
     "ngx-pagination": "^3.3.1",
     "ngx-spinner": "^8.0.3",
